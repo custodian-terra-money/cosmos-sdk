@@ -72,6 +72,14 @@ func Paginate(
 		countTotal = true
 	}
 
+	if countTotal {
+		return nil, fmt.Errorf("invalid request, count_total is not allowed for the public node")
+	}
+
+	if limit != 10 && limit != 50 && limit != 100 {
+		return nil, fmt.Errorf("invalid request, limit must be one of 10, 50, or 100")
+	}
+
 	if len(key) != 0 {
 		iterator := getIterator(prefixStore, key, reverse)
 		defer iterator.Close()

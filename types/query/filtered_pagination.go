@@ -42,6 +42,10 @@ func FilteredPaginate(
 		countTotal = true
 	}
 
+	if countTotal {
+		return nil, fmt.Errorf("invalid request, count_total is not allowed for the public node")
+	}
+
 	if len(key) != 0 {
 		iterator := getIterator(prefixStore, key, reverse)
 		defer iterator.Close()
